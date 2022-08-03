@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Product = require('../models/Product.model');
+const mongoose = require('mongoose');
 
 router.get('/products', (req, res, next)=>{
     Product.find()

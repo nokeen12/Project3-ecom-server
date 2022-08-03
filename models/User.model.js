@@ -16,7 +16,17 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-    }
+    },
+    isAdmin:{
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    cart: {
+      type: Array,
+      required: true,
+      default: [],
+    },
   },
   {
     timestamps: true,
