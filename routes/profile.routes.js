@@ -3,14 +3,22 @@ const User = require('../models/User.model')
 const mongoose = require('mongoose');
 
 
-// router.get('/profiles', (req, res, next)=>{
-//     res.json('profile page')
-// })
+router.get('/profile/cart/:userId', (req, res, next)=>{
+    const { userId } = req.params;
+    if(!mongoose.Types.ObjectId.isValid(userId)){
+        res.status(400).json({message: 'Specified id is not valid'});
+        return;
+    }
+    User.findById(userId)
+        .then(selectedUser=>{
+            res.json(selectedUser.cart)
+        })
+        .catch(err=>res.json(err))
+})
 
-//update account with inputted data
+
 router.put('/profile/edit/:userId', (req, res, next)=>{
     const { userId } = req.params;
-    // const { username, email, cart } = req.body ;
 
     if(!mongoose.Types.ObjectId.isValid(userId)){
         res.status(400).json({message: 'Specified id is not valid'});
@@ -21,10 +29,11 @@ router.put('/profile/edit/:userId', (req, res, next)=>{
     .then(updatedUser => res.json(updatedUser))
     .catch(err=>res.json(err))
 })
-
-// //delete user account
-// router.delete('/profile', (req, res, next)=>{
-//     res.json('deleting account')
-// })
+router.delete('/profile/:userId', (req, res)=>{
+    const { userId } = req.params;
+    User.findByIdAndDelete(userId)
+    .then(() => res.json(`User:'${userId}' deleted`))
+    .catch(err=>res.json(err))
+})
 
 module.exports = router;
