@@ -10,7 +10,7 @@ const User = require("../models/User.model");
 //     res.json("view your cart page")
 // })
 
-router.post('/cart', (req,res)=>{
+router.put('/cart', (req,res)=>{
     const { productId, userId } = req.body;
     User.findByIdAndUpdate(userId, { $push: { cart: productId}})
     .then(response => res.json(response))
