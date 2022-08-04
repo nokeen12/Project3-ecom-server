@@ -2,7 +2,7 @@ const router = require('express').Router();
 // const express = require('express');
 const User = require("../models/User.model");
 const Product = require("../models/Product.model");
-const { useResolvedPath } = require('react-router-dom');
+// const { useResolvedPath } = require('react-router-dom');
 // const { isAuthenticated } = require('./../middleware/jwt.middleware.js');
 
 router.post('/cart', (req,res)=>{
