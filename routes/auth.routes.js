@@ -50,7 +50,7 @@ router.post('/signup',(req,res)=>{
     
         // Create the new user in the database
         // We return a pending promise, which allows us to chain another `then` 
-        return User.create({ username, email, password: hashedPassword });
+        return User.create({ username, email, password: hashedPassword, cart: [] });
     })
     .then((createdUser) => {
         // Deconstruct the newly created user object to omit the password
@@ -115,6 +115,7 @@ router.post('/login',(req,res)=>{
     })
     .catch(err => res.status(500).json({ message: "Internal Server Error" }));
 })
+
 router.get('/verify', isAuthenticated, (req,res)=>{
     console.log(`req.payload`, req.payload);
     res.status(200).json(req.payload);

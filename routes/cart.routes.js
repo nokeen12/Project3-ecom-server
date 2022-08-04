@@ -1,22 +1,27 @@
 const router = require('express').Router();
-const express = require('express');
+// const express = require('express');
 const User = require("../models/User.model");
+// const { isAuthenticated } = require('./../middleware/jwt.middleware.js');
 
-const { isAuthenticated } = require('./../middleware/jwt.middleware.js');
+// router.get('/cart', (req,res)=>{
+    
 
-router.get('/cart', (req,res)=>{
-    res.json("view your cart page")
-})
+//     User.findOne({  })
+//     res.json("view your cart page")
+// })
 
 router.post('/cart', (req,res)=>{
-    res.json("send in your order")
+    const { productId, userId } = req.body;
+    User.findByIdAndUpdate(userId, { $push: { cart: productId}})
+    .then(response => res.json(response))
+    .catch(err => res.json(err))
 })
 
-router.put('/cart',(req,res)=>{
-    res.json("update your cart")
-})
+// router.put('/cart',(req,res)=>{
+//     res.json("update your cart")
+// })
 
-router.delete('/cart', (req,res)=>{
-    res.json("delete your cart")
-})
+// router.delete('/cart', (req,res)=>{
+//     res.json("delete your cart")
+// })
 module.exports = router;

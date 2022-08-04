@@ -22,11 +22,7 @@ const userSchema = new Schema(
       required: true,
       default: false,
     },
-    cart: {
-      type: Array,
-      required: true,
-      default: [],
-    },
+    cart: [ { type: Schema.Types.ObjectId, ref: 'Product' } ]
   },
   {
     timestamps: true,
