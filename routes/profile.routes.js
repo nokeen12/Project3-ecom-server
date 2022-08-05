@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/User.model')
 const mongoose = require('mongoose');
-
+const Product = require('../models/Product.model')
 
 router.get('/profile/cart/:userId', (req, res, next)=>{
     const { userId } = req.params;
@@ -14,6 +14,16 @@ router.get('/profile/cart/:userId', (req, res, next)=>{
             res.json(selectedUser.cart)
         })
         .catch(err=>res.json(err))
+})
+
+router.put('/profile/cart/:userId', (req,res)=>{
+    const { cart } = req.body;
+    const { userId } = req.params
+    User.findByIdAndUpdate(userId, cart)
+        .then(foundUser => {
+            res.json(foundUser.cart)
+        })
+        .catch(err => res.json(err))
 })
 
 
