@@ -17,13 +17,16 @@ router.get('/profile/cart/:userId', (req, res, next)=>{
 })
 
 router.put('/profile/cart/:userId', (req,res)=>{
-    const { cart } = req.body;
+    const { productId } = req.body;
     const { userId } = req.params
-    User.findByIdAndUpdate(userId, cart)
-        .then(foundUser => {
-            res.json(foundUser.cart)
-        })
-        .catch(err => res.json(err))
+
+    User.findById(userId)
+    .then(foundUser => {
+        let update = { cart: foundUser.cart.filter(el => el.title !== productId) }
+        User.findByIdAndUpdate(userId, update)
+        .then(updatedUser=>res.json(updatedUser.cart))
+    })
+    .catch(err => res.json(err))
 })
 
 
@@ -39,6 +42,8 @@ router.put('/profile/edit/:userId', (req, res, next)=>{
     .then(updatedUser => res.json(updatedUser))
     .catch(err=>res.json(err))
 })
+
+
 router.delete('/profile/:userId', (req, res)=>{
     const { userId } = req.params;
     User.findByIdAndDelete(userId)
